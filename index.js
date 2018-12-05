@@ -1,3 +1,6 @@
+// FIFO for motion pipe
+const FIFO = require('fifo-js');
+
 var Accessory, hap, UUIDGen;
 
 var FFMPEG = require('./ffmpeg').FFMPEG;
