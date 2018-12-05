@@ -23,9 +23,14 @@ function ffmpegPlatform(log, config, api) {
       throw new Error("Unexpected API version.");
     }
     
-    // from homebridge-camera-motion
-    this.motionAccessory = new CameraMotionAccessory(log, config, api);
-    // end
+    // Optionally adding motion sensor
+    if (config.motionConfig) {
+        // from homebridge-camera-motion
+        this.motionAccessory = new CameraMotionAccessory(log, config, api);
+        // end
+    } else {
+        console.log('No motion sensor configuration.');
+    }
     
     self.api.on('didFinishLaunching', self.didFinishLaunching.bind(this));
   } else {
