@@ -73,7 +73,7 @@ ffmpegPlatform.prototype.didFinishLaunching = function() {
       var cameraSource = new FFMPEG(hap, cameraConfig, self.log, videoProcessor);
       cameraAccessory.configureCameraSource(cameraSource);
       // adding motion sensor
-      this.motionAccessory.setSource(cameraSource);
+      self.motionAccessory.setSource(cameraSource);
       configuredAccessories.push(cameraAccessory);
     });
 
