@@ -29,7 +29,7 @@ function ffmpegPlatform(log, config, api) {
     // Optionally adding motion sensor
     if (config.motionConfig) {
         // from homebridge-camera-motion
-        this.motionAccessory = new CameraMotionAccessory(log, config, api);
+        self.motionAccessory = new CameraMotionAccessory(log, config, api);
         // end
     } else {
         console.log('No motion sensor configuration.');
@@ -48,7 +48,8 @@ ffmpegPlatform.prototype.configureAccessory = function(accessory) {
 */
 // Copied from h-c-m
 ffmpegPlatform.prototype.accessories = function(cb) {
-    cb([this.motionAccessory]);
+    var self = this;
+    cb([self.motionAccessory]);
 }
 
 ffmpegPlatform.prototype.didFinishLaunching = function() {
