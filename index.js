@@ -27,9 +27,9 @@ function ffmpegPlatform(log, config, api) {
     }
     
     // Optionally adding motion sensor
-    if (config.motionConfig) {
+    if (self.config.motionConfig) {
         // from homebridge-camera-motion
-        self.motionAccessory = new CameraMotionAccessory(log, config, api);
+        self.motionAccessory = new CameraMotionAccessory(log, self.config, api);
         // end
     } else {
         console.log('No motion sensor configuration.');
