@@ -36,6 +36,7 @@ function FFMPEG(hap, cameraConfig, log, videoProcessor) {
 
   this.ffmpegSource = ffmpegOpt.source;
   this.ffmpegImageSource = ffmpegOpt.stillImageSource;
+  this.snapshotPath = ffmpegOpt.snapshotPath;
 
   this.services = [];
   this.streamControllers = [];
