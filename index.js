@@ -78,7 +78,7 @@ class CameraMotionAccessory
     this.name = config.motionConfig.name || 'Motion Detector';
 
     this.pipePath = config.motionConfig.pipe || '/tmp/motion-pipe';
-    this.timeout = config.motionConfig.timeout !== undefined ? config.motion_timeout : 2000;
+    this.timeout = config.motionConfig.timeout !== undefined ? config.motionConfig.timeout : 2000;
 
     this.pipe = new FIFO(this.pipePath);
     this.pipe.setReader(this.onPipeRead.bind(this));
