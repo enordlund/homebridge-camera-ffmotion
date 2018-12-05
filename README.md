@@ -33,8 +33,8 @@ For the first version, I will be combining the code of these two plugins so that
 		},
 		"motionConfig": {
 			"name": "Motion Sensor Name",
-			"motionPipe": "/tmp/motion-pipe",
-			"motionTimeout": 2000
+			"pipe": "/tmp/motion-pipe",
+			"timeout": 2000
 		}
 	}
   ]
