@@ -74,10 +74,11 @@ class CameraMotionAccessory
     this.log = log;
     this.api = api;// This might be unsafe, but the constructor is only called within if(api)
     config = config || {};
-    this.name = config.name_motion || 'Motion Detector';
+    let defaultName = 
+    this.name = config.motionConfig.name || 'Motion Detector';
 
-    this.pipePath = config.motion_pipe || '/tmp/motion-pipe';
-    this.timeout = config.motion_timeout !== undefined ? config.motion_timeout : 2000;
+    this.pipePath = config.motionConfig.pipe || '/tmp/motion-pipe';
+    this.timeout = config.motionConfig.timeout !== undefined ? config.motion_timeout : 2000;
 
     this.pipe = new FIFO(this.pipePath);
     this.pipe.setReader(this.onPipeRead.bind(this));
