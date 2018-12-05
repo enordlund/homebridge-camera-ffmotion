@@ -72,7 +72,7 @@ class CameraMotionAccessory
   constructor(log, config, api) {
     log(`CameraMotion accessory starting`);
     this.log = log;
-    this.api = api;
+    this.api = api;// This might be unsafe, but the constructor is only called within if(api)
     config = config || {};
     this.name = config.name_motion || 'Motion Detector';
 
