@@ -14,24 +14,29 @@ For the first version, I will be combining the code of these two plugins so that
 
 ```
 {
-  "platform": "Camera-ffmotion",
-  "cameras": [
-    {
-      "name": "Camera Name",
-      "videoConfig": {
-      	"source": "-re -i rtsp://myfancy_rtsp_stream",
-        "snapshotPath": "/tmp/lastsnap.jpg",
-      	"maxStreams": 2,
-      	"maxWidth": 1280,
-      	"maxHeight": 720,
-      	"maxFPS": 30,
-      	"maxBitrate": 200,
-      	"vcodec": "h264_omx",
-      	"audio": true,
-      	"packetSize": 188,
-      	"debug": true
-      }
-    }
+	"platform": "Camera-ffmotion",
+	"cameras": [
+	{
+		"name": "Camera Name",
+		"videoConfig": {
+			"source": "-re -i rtsp://myfancy_rtsp_stream",
+			"snapshotPath": "/tmp/lastsnap.jpg",
+			"maxStreams": 2,
+			"maxWidth": 1280,
+			"maxHeight": 720,
+			"maxFPS": 30,
+			"maxBitrate": 200,
+			"vcodec": "h264_omx",
+			"audio": true,
+			"packetSize": 188,
+			"debug": true
+		},
+		"motionConfig": {
+			"name": "Motion Sensor Name",
+			"motionPipe": "/tmp/motion-pipe",
+			"motionTimeout": 2000
+		}
+	}
   ]
 }
 ```
