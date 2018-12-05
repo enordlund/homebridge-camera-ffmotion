@@ -127,7 +127,7 @@ class CameraMotionAccessory
     // %D changed pixels
     const [filename, filetype, event, width, height, x, y, noise, dpixels] = text.trim().split('\t');
     console.log('filename is',filename);
-    this.cameraSource.snapshot_path = filename;
+    this.cameraSource.snapshotPath = filename;
     this.setMotion(true);
 
     setTimeout(() => this.setMotion(false), this.timeout); // TODO: is this how this works?
