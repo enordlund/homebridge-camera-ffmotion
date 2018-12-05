@@ -141,6 +141,16 @@ FFMPEG.prototype.handleCloseConnection = function(connectionID) {
 }
 
 FFMPEG.prototype.handleSnapshotRequest = function(request, callback) {
+    console.log('ffMotionHandleSnapshotRequest',request);
+    fs.readFile(this.snapshotPath, (err, data) => {
+      if (err) return callback(err);
+
+      // TODO: scale to requested dimensions
+      callback(null, data);
+    });
+}
+/*
+FFMPEG.prototype.handleSnapshotRequest = function(request, callback) {
   let resolution = request.width + 'x' + request.height;
   var imageSource = this.ffmpegImageSource !== undefined ? this.ffmpegImageSource : this.ffmpegSource;
   let ffmpeg = spawn(this.videoProcessor, (imageSource + ' -t 1 -s '+ resolution + ' -f image2 -').split(' '), {env: process.env});
@@ -161,7 +171,7 @@ FFMPEG.prototype.handleSnapshotRequest = function(request, callback) {
     callback(undefined, imageBuffer);
   }.bind(this));
 }
-
+*/
 FFMPEG.prototype.prepareStream = function(request, callback) {
   var sessionInfo = {};
 
