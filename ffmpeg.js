@@ -141,6 +141,7 @@ FFMPEG.prototype.handleCloseConnection = function(connectionID) {
   });
 }
 
+// This is taken from homebridge-camera-motion
 FFMPEG.prototype.handleSnapshotRequest = function(request, callback) {
     console.log('ffMotionHandleSnapshotRequest',request);
     fs.readFile(this.snapshotPath, (err, data) => {
