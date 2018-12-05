@@ -1,3 +1,2 @@
 Still working on adding the motion sensor.
-• as far as the motion sensor class goes, I've paused after adding FIFO to index.js
-    • need to figure out what the role of the CameraSource class is for motion detection.
+• Need to modify the cameras loop thing in the constructor to do the motion sensor adding that is currently above it.

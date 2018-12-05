@@ -35,6 +35,33 @@ function ffmpegPlatform(log, config, api) {
         console.log('No motion sensor configuration.');
     }
     
+    // Looping through cameras to add motion sensors if configured.
+    if (self.config.cameras) {
+      var configuredAccessories = [];
+
+      var cameras = self.config.cameras;
+      cameras.forEach(function(cameraConfig) {
+        var cameraName = cameraConfig.name;
+        var videoConfig = cameraConfig.videoConfig;
+
+        if (!cameraName || !videoConfig) {
+          self.log("Missing parameters.");
+          return;
+        }
+
+        var uuid = UUIDGen.generate(cameraName);
+        var cameraAccessory = new Accessory(cameraName, uuid, hap.Accessory.Categories.CAMERA);
+        var cameraSource = new FFMPEG(hap, cameraConfig, self.log, videoProcessor);
+        cameraAccessory.configureCameraSource(cameraSource);
+        // adding motion sensor
+        self.motionAccessory.setSource(cameraSource);
+        configuredAccessories.push(cameraAccessory);
+      });
+
+      self.api.publishCameraAccessories("Camera-ffmotion", configuredAccessories);
+    }
+    
+    
     self.api.on('didFinishLaunching', self.didFinishLaunching.bind(this));
   } else {
     console.log('ERROR: No api');
