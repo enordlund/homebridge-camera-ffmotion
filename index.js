@@ -41,9 +41,14 @@ function ffmpegPlatform(log, config, api) {
   }
   
 }
-
+/*
 ffmpegPlatform.prototype.configureAccessory = function(accessory) {
   // Won't be invoked
+}
+*/
+// Copied from h-c-m
+ffmpegPlatform.prototype.accessories = function(cb) {
+    cb([this.motionAccessory]);
 }
 
 ffmpegPlatform.prototype.didFinishLaunching = function() {
