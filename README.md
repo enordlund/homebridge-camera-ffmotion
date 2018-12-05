@@ -18,6 +18,7 @@ For the first version, I will be combining the code of these two plugins so that
 
 #### Add homebridge-fixfifo.sh to boot script
 Run homebridge-fixfifo.sh in a boot script like /etc/local.rc to fix fifo issues with motion-pipe.
+Edit the file to match your user/path info.
 
 ### Example Configuration
 
