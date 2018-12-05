@@ -10,7 +10,16 @@ In my experience, the two previously mentioned Homebridge plugins seem to have t
 
 For the first version, I will be combining the code of these two plugins so that homebridge-camera-ffmpeg will gain motion sensor and snapshot functionality. I am also considering the addition of more features for the future.
 
-## Example Configuration
+## Installation
+
+### Motion Detection
+
+#### Install Motion
+
+#### Add homebridge-fixfifo.sh to boot script
+Run homebridge-fixfifo.sh in a boot script like /etc/local.rc to fix fifo issues with motion-pipe.
+
+### Example Configuration
 
 ```
 {
