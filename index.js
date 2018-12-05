@@ -15,16 +15,23 @@ function ffmpegPlatform(log, config, api) {
 
   self.log = log;
   self.config = config || {};
-
+  
   if (api) {
     self.api = api;
 
     if (api.version < 2.1) {
       throw new Error("Unexpected API version.");
     }
-
+    
+    // from homebridge-camera-motion
+    this.motionAccessory = new CameraMotionAccessory(log, config, api);
+    // end
+    
     self.api.on('didFinishLaunching', self.didFinishLaunching.bind(this));
+  } else {
+    console.log('ERROR: No api');
   }
+  
 }
 
 ffmpegPlatform.prototype.configureAccessory = function(accessory) {
