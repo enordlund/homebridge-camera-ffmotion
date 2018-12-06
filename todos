@@ -3,3 +3,6 @@ Still working on adding the motion sensor.
 • Change MotionCameraAccessory to use motionConfig for input, rather than the generic config file?
 • Figure out how to set the source for MotionCameraAccessory in this loop format
     • Investigate the new Accessory() thing in didFinishLaunching, & compare to h-c-m addition approach with source things.
+
+
+It currently compiles if I don't add the motion accessory in accessories().

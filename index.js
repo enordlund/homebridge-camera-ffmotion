@@ -3,17 +3,23 @@ const FIFO = require('fifo-js');
 
 var Accessory, hap, UUIDGen;
 
+var Service, Characteristic;//added for CameraMotionAccessory
+
 var FFMPEG = require('./ffmpeg').FFMPEG;
 
 module.exports = function(homebridge) {
   Accessory = homebridge.platformAccessory;
   hap = homebridge.hap;
   UUIDGen = homebridge.hap.uuid;
+  
+  Service = homebridge.hap.Service;//added for CameraMotionAccessory
+  Characteristic = homebridge.hap.Characteristic;
 
   homebridge.registerPlatform("homebridge-camera-ffmotion", "Camera-ffmotion", ffmpegPlatform, true);
 }
 
 function ffmpegPlatform(log, config, api) {
+  console.log('constructor called');
   var self = this;
 
   self.log = log;
@@ -40,12 +46,13 @@ ffmpegPlatform.prototype.configureAccessory = function(accessory) {
 
 // Copied from h-c-m
 ffmpegPlatform.prototype.accessories = function(cb) {
-    console.log('accessories() called');
+    console.log('accessories() called');/*
     var self = this;
-    cb([self.motionAccessory]);
+    cb([self.motionAccessory]);*/
 }
 
 ffmpegPlatform.prototype.didFinishLaunching = function() {
+  console.log('didFinishLaunching() called');
   var self = this;
   var videoProcessor = self.config.videoProcessor || 'ffmpeg';
 
@@ -71,10 +78,10 @@ ffmpegPlatform.prototype.didFinishLaunching = function() {
       // Optionally adding motion sensor
       if (cameraConfig.motionConfig) {
           // from homebridge-camera-motion
-          var motionAccessory = new CameraMotionAccessory(log, cameraConfig, api);
+          var motionAccessory = new CameraMotionAccessory(self.log, cameraConfig, self.api);
           // end
           motionAccessory.setSource(cameraSource);
-          configuredAccessories.push(motionAccessory);
+          //configuredAccessories.push(motionAccessory);
       } else {
           console.log('No motion sensor configuration for camera: ' + cameraName);
       }
