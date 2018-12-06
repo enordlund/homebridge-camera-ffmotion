@@ -26,23 +26,6 @@ function ffmpegPlatform(log, config, api) {
       throw new Error("Unexpected API version.");
     }
     
-    
-    
-    // Looping through cameras to add motion sensors if configured.
-    if (self.config.cameras) {
-      var configuredAccessories = [];
-
-      var cameras = self.config.cameras;
-      cameras.forEach(function(cameraConfig) {
-        var cameraName = cameraConfig.name;
-        var videoConfig = cameraConfig.videoConfig;
-        
-        
-        
-      });
-    }
-    
-    
     self.api.on('didFinishLaunching', self.didFinishLaunching.bind(this));
   } else {
     console.log('ERROR: No api');
@@ -54,12 +37,13 @@ ffmpegPlatform.prototype.configureAccessory = function(accessory) {
   // Won't be invoked
 }
 */
-/*
+
 // Copied from h-c-m
 ffmpegPlatform.prototype.accessories = function(cb) {
+    console.log('accessories() called');
     var self = this;
     cb([self.motionAccessory]);
-}*/
+}
 
 ffmpegPlatform.prototype.didFinishLaunching = function() {
   var self = this;
