@@ -26,14 +26,7 @@ function ffmpegPlatform(log, config, api) {
       throw new Error("Unexpected API version.");
     }
     
-    // Optionally adding motion sensor
-    if (self.config.motionConfig) {
-        // from homebridge-camera-motion
-        self.motionAccessory = new CameraMotionAccessory(log, self.config, api);
-        // end
-    } else {
-        console.log('No motion sensor configuration.');
-    }
+    
     
     // Looping through cameras to add motion sensors if configured.
     if (self.config.cameras) {
@@ -43,22 +36,18 @@ function ffmpegPlatform(log, config, api) {
       cameras.forEach(function(cameraConfig) {
         var cameraName = cameraConfig.name;
         var videoConfig = cameraConfig.videoConfig;
-
-        if (!cameraName || !videoConfig) {
-          self.log("Missing parameters.");
-          return;
+        
+        // Optionally adding motion sensor
+        if (cameraConfig.motionConfig) {
+            var motionConfig = cameraConfig.motionConfig;
+            // from homebridge-camera-motion
+            self.motionAccessory = new CameraMotionAccessory(log, cameraConfig, api);//self.motionAccessory does what?
+            // end
+        } else {
+            console.log('No motion sensor configuration for camera: ' + cameraName);
         }
-
-        var uuid = UUIDGen.generate(cameraName);
-        var cameraAccessory = new Accessory(cameraName, uuid, hap.Accessory.Categories.CAMERA);
-        var cameraSource = new FFMPEG(hap, cameraConfig, self.log, videoProcessor);
-        cameraAccessory.configureCameraSource(cameraSource);
-        // adding motion sensor
-        self.motionAccessory.setSource(cameraSource);
-        configuredAccessories.push(cameraAccessory);
+        
       });
-
-      self.api.publishCameraAccessories("Camera-ffmotion", configuredAccessories);
     }
     
     
@@ -117,8 +106,8 @@ class CameraMotionAccessory
     this.log = log;
     this.api = api;// This might be unsafe, but the constructor is only called within if(api)
     config = config || {};
-    let defaultName = 
-    this.name = config.motionConfig.name || 'Motion Detector';
+    let defaultName = config.name + ' Motion Sensor';
+    this.name = config.motionConfig.name || defaultName;
 
     this.pipePath = config.motionConfig.pipe || '/tmp/motion-pipe';
     this.timeout = config.motionConfig.timeout !== undefined ? config.motionConfig.timeout : 2000;

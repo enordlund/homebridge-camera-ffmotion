@@ -1,2 +1,5 @@
 Still working on adding the motion sensor.
-• Need to modify the cameras loop thing in the constructor to do the motion sensor adding that is currently above it.
+• Possibly move the part in the constructor to the didFinishLaunching loop.
+• Change MotionCameraAccessory to use motionConfig for input, rather than the generic config file?
+• Figure out how to set the source for MotionCameraAccessory in this loop format
+    • Investigate the new Accessory() thing in didFinishLaunching, & compare to h-c-m addition approach with source things.
