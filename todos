@@ -8,3 +8,11 @@ Still working on adding the motion sensor.
 It currently compiles if I don't add the motion accessory in accessories().
 • I might need to bring some things back into the constructor?
 • It's key to add the motion accessories to accessories().
+
+
+
+
+
+
+Longer term things
+• Add config safety
