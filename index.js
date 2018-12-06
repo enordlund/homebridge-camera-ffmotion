@@ -37,15 +37,7 @@ function ffmpegPlatform(log, config, api) {
         var cameraName = cameraConfig.name;
         var videoConfig = cameraConfig.videoConfig;
         
-        // Optionally adding motion sensor
-        if (cameraConfig.motionConfig) {
-            var motionConfig = cameraConfig.motionConfig;
-            // from homebridge-camera-motion
-            self.motionAccessory = new CameraMotionAccessory(log, cameraConfig, api);//self.motionAccessory does what?
-            // end
-        } else {
-            console.log('No motion sensor configuration for camera: ' + cameraName);
-        }
+        
         
       });
     }
@@ -62,11 +54,12 @@ ffmpegPlatform.prototype.configureAccessory = function(accessory) {
   // Won't be invoked
 }
 */
+/*
 // Copied from h-c-m
 ffmpegPlatform.prototype.accessories = function(cb) {
     var self = this;
     cb([self.motionAccessory]);
-}
+}*/
 
 ffmpegPlatform.prototype.didFinishLaunching = function() {
   var self = this;
@@ -89,9 +82,18 @@ ffmpegPlatform.prototype.didFinishLaunching = function() {
       var cameraAccessory = new Accessory(cameraName, uuid, hap.Accessory.Categories.CAMERA);
       var cameraSource = new FFMPEG(hap, cameraConfig, self.log, videoProcessor);
       cameraAccessory.configureCameraSource(cameraSource);
-      // adding motion sensor
-      self.motionAccessory.setSource(cameraSource);
       configuredAccessories.push(cameraAccessory);
+      
+      // Optionally adding motion sensor
+      if (cameraConfig.motionConfig) {
+          // from homebridge-camera-motion
+          var motionAccessory = new CameraMotionAccessory(log, cameraConfig, api);
+          // end
+          motionAccessory.setSource(cameraSource);
+          configuredAccessories.push(motionAccessory);
+      } else {
+          console.log('No motion sensor configuration for camera: ' + cameraName);
+      }
     });
 
     self.api.publishCameraAccessories("Camera-ffmotion", configuredAccessories);
