@@ -13,6 +13,7 @@ It currently compiles if I don't add the motion accessory in accessories().
 
 LATEST
 Need to get snapshots to send with motion detection notifications.
+• This ties in with the FIFO motion-pipe file, which contains numbers rather than the actual data.
 
 
 
