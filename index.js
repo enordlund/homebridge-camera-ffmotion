@@ -85,7 +85,7 @@ ffmpegPlatform.prototype.didFinishLaunching = function() {
   if (self.config.cameras) {
     var configuredAccessories = [];
     
-    var cameraSources = [];
+    var motionCameraSources = [];
 
     var cameras = self.config.cameras;
     cameras.forEach(function(cameraConfig) {
@@ -105,14 +105,14 @@ ffmpegPlatform.prototype.didFinishLaunching = function() {
       
       // Optionally adding motion sensor
       if (cameraConfig.motionConfig) {
-          cameraSources.push(cameraSource);
+          motionCameraSources.push(cameraSource);
       } else {
           console.log('No motion sensor configuration for camera: ' + cameraName);
       }
     });
     
     self.motionAccessories.forEach(function(motionAccessory) {// <--- Does this function work for this?
-      var source = cameraSources.pop();// -------------------- Need to figure out if this is a function, and if it's in right order
+      var source = motionCameraSources.pop();// -------------------- Need to figure out if this is a function, and if it's in right order
       // --------------------------------------------------------- So, FILO? FIFO? What order does the pushing leave them in?
       motionAccessory.setSource(source);
     });
