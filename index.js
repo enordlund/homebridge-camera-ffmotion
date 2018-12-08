@@ -25,11 +25,37 @@ function ffmpegPlatform(log, config, api) {
   self.log = log;
   self.config = config || {};
   
+  self.motionAccessories = [];
+  
   if (api) {
     self.api = api;
 
     if (api.version < 2.1) {
       throw new Error("Unexpected API version.");
+    }
+    
+    if (self.config.cameras) {
+    
+      var cameras = self.config.cameras;
+      cameras.forEach(function(cameraConfig) {
+        var cameraName = cameraConfig.name;
+
+        if (!cameraName) {
+          self.log("Missing parameters.");
+          return;
+        }
+        
+        // Optionally adding motion sensor
+        if (cameraConfig.motionConfig) {
+            var motionConfig = cameraConfig.motionConfig;
+            // from homebridge-camera-motion
+            var motionAccessory = new CameraMotionAccessory(self.log, motionConfig, self.api);
+            // end 
+            self.motionAccessories.push(motionAccessory);
+        } else {
+            console.log('No motion sensor configuration for camera: ' + cameraName);
+        }
+      });
     }
     
     self.api.on('didFinishLaunching', self.didFinishLaunching.bind(this));
@@ -46,9 +72,9 @@ ffmpegPlatform.prototype.configureAccessory = function(accessory) {
 
 // Copied from h-c-m
 ffmpegPlatform.prototype.accessories = function(cb) {
-    console.log('accessories() called');/*
+    console.log('accessories() called');
     var self = this;
-    cb([self.motionAccessory]);*/
+    cb(self.motionAccessories);
 }
 
 ffmpegPlatform.prototype.didFinishLaunching = function() {
@@ -58,6 +84,8 @@ ffmpegPlatform.prototype.didFinishLaunching = function() {
 
   if (self.config.cameras) {
     var configuredAccessories = [];
+    
+    var cameraSources = [];
 
     var cameras = self.config.cameras;
     cameras.forEach(function(cameraConfig) {
@@ -77,14 +105,16 @@ ffmpegPlatform.prototype.didFinishLaunching = function() {
       
       // Optionally adding motion sensor
       if (cameraConfig.motionConfig) {
-          // from homebridge-camera-motion
-          var motionAccessory = new CameraMotionAccessory(self.log, cameraConfig, self.api);
-          // end
-          motionAccessory.setSource(cameraSource);
-          //configuredAccessories.push(motionAccessory);
+          cameraSources.push(cameraSource);
       } else {
           console.log('No motion sensor configuration for camera: ' + cameraName);
       }
+    });
+    
+    self.motionAccessories.forEach(function(motionAccessory) {// <--- Does this function work for this?
+      var source = cameraSources.pop();// -------------------- Need to figure out if this is a function, and if it's in right order
+      // --------------------------------------------------------- So, FILO? FIFO? What order does the pushing leave them in?
+      motionAccessory.setSource(source);
     });
 
     self.api.publishCameraAccessories("Camera-ffmotion", configuredAccessories);
@@ -94,16 +124,16 @@ ffmpegPlatform.prototype.didFinishLaunching = function() {
 // An accessory with a MotionSensor service (from homebridge-camera-motion)
 class CameraMotionAccessory
 {
-  constructor(log, config, api) {
-    log(`CameraMotion accessory starting`);
+  constructor(log, motionConfig, api) {
+    log(`FFMotion motion accessory starting`);
     this.log = log;
     this.api = api;// This might be unsafe, but the constructor is only called within if(api)
-    config = config || {};
-    let defaultName = config.name + ' Motion Sensor';
-    this.name = config.motionConfig.name || defaultName;
+    motionConfig = motionConfig || {};
+    let defaultName = motionConfig.name + ' Motion Sensor';
+    this.name = motionConfig.name || defaultName;
 
-    this.pipePath = config.motionConfig.pipe || '/tmp/motion-pipe';
-    this.timeout = config.motionConfig.timeout !== undefined ? config.motionConfig.timeout : 2000;
+    this.pipePath = motionConfig.pipe || '/tmp/motion-pipe';
+    this.timeout = motionConfig.timeout !== undefined ? motionConfig.timeout : 2000;
 
     this.pipe = new FIFO(this.pipePath);
     this.pipe.setReader(this.onPipeRead.bind(this));

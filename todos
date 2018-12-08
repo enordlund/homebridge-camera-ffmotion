@@ -11,6 +11,10 @@ It currently compiles if I don't add the motion accessory in accessories().
 
 
 
+LATEST
+Need to finish setting sources for motion accessories. Research behavior of js push/pop, forEach.
+
+
 
 
 
