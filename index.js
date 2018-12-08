@@ -111,9 +111,8 @@ ffmpegPlatform.prototype.didFinishLaunching = function() {
       }
     });
     
-    self.motionAccessories.forEach(function(motionAccessory) {// <--- Does this function work for this?
-      var source = motionCameraSources.pop();// -------------------- Need to figure out if this is a function, and if it's in right order
-      // --------------------------------------------------------- So, FILO? FIFO? What order does the pushing leave them in?
+    self.motionAccessories.forEach(function(motionAccessory) {
+      var source = motionCameraSources.shift();
       motionAccessory.setSource(source);
     });
 
