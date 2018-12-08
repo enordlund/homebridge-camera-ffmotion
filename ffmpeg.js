@@ -145,8 +145,10 @@ FFMPEG.prototype.handleCloseConnection = function(connectionID) {
 FFMPEG.prototype.handleSnapshotRequest = function(request, callback) {
     console.log('ffMotionHandleSnapshotRequest',request);
     fs.readFile(this.snapshotPath, (err, data) => {
-      if (err) return callback(err);
-
+      if (err) {
+        console.log('SNAPSHOT ERROR: ' + err);
+        return callback(err);
+      }
       // TODO: scale to requested dimensions
       callback(null, data);
     });
