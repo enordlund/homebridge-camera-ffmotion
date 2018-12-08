@@ -1,28 +1,7 @@
-Still working on adding the motion sensor.
-• Possibly move the part in the constructor to the didFinishLaunching loop.
-• Change MotionCameraAccessory to use motionConfig for input, rather than the generic config file?
-• Figure out how to set the source for MotionCameraAccessory in this loop format
-    • Investigate the new Accessory() thing in didFinishLaunching, & compare to h-c-m addition approach with source things.
-
-
-It currently compiles if I don't add the motion accessory in accessories().
-• I might need to bring some things back into the constructor?
-• It's key to add the motion accessories to accessories().
-
-
-
-LATEST
-Need to get snapshots to send with motion detection notifications.
-• This ties in with the FIFO motion-pipe file, which contains numbers rather than the actual data.
-NEW INFO:
-• snapshot requests stick on the motion-pipe filepath after motion detection
-• motion-pipe filepath is just the event number.
-    • test this with just the filepath or something
-
-Need to know if Motion's printf to motion-pipe is faulty, or if it's the reading by ffmotion that's faulty.
 
 
 
 
 Longer term things
 • Add config safety
+• Figure out how to get motion-pipe content correct.
