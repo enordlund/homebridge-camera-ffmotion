@@ -19,6 +19,8 @@ NEW INFO:
 • motion-pipe filepath is just the event number.
     • test this with just the filepath or something
 
+Need to know if Motion's printf to motion-pipe is faulty, or if it's the reading by ffmotion that's faulty.
+
 
 
 
