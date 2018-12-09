@@ -22,9 +22,10 @@ Edit the file to match your user/path info.
 
 ## Configuration
 
-### Requirements
+### .homebridge/config.json Requirements
 Each camera must have a unique name.
 
+### Sample .homebridge/config.json Configuration:
 ```
 {
 	"platform": "Camera-ffmotion",
@@ -53,3 +54,5 @@ Each camera must have a unique name.
   ]
 }
 ```
+
+### motion.conf Requirements
