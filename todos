@@ -5,3 +5,4 @@ CURRENT: Add audio support to FFMPEG
 Longer term things
 • Add config safety
 • Figure out how to get motion-pipe content correct.
+• If motion accessory is not added, do not use motion
